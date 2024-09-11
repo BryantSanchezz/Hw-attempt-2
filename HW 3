@@ -1,0 +1,73 @@
+#include <iostream>
+
+using namespace std;
+
+constexpr double pi() { return 3.14; } // constant for pi
+
+// area of a square
+constexpr double area_square(double side) {
+    return side * side;
+}
+
+// area of a rectangle
+constexpr double area_rectangle(double length, double width) {
+    return length * width;
+}
+
+// area of a circle
+constexpr double area_circle(double radius) {
+    return pi() * radius * radius;
+}
+
+//  area of a cylinder
+constexpr double area_cylinder(double radius, double height) {
+    return 2 * pi() * radius * (radius + height);
+}
+
+int main() {
+    int choice;
+    double height, width, length, radius;
+
+    cout << "1. Calculate the area of a square.\n";
+    cout << "2. Calculate the area of a rectangle.\n";
+    cout << "3. Calculate the area of a circle.\n";
+    cout << "4. Calculate the area of a cylinder.\n";
+    cout << "Please enter your choice (1-4): ";
+    cin >> choice;
+
+    switch (choice) {
+        case 1: {
+            cout << "Enter side length: ";
+            cin >> length;
+            cout << "Total area of square: " << area_square(length) << '\n';
+            break;
+        }
+        case 2: {
+            cout << "Enter height: ";
+            cin >> height;
+            cout << "Enter width: ";
+            cin >> width;
+            cout << "Total area of rectangle: " << area_rectangle(height, width) << '\n';
+            break;
+        }
+        case 3: {
+            cout << "Enter radius: ";
+            cin >> radius;
+            cout << "Total area of circle: " << area_circle(radius) << '\n';
+            break;
+        }
+        case 4: {
+            cout << "Enter radius: ";
+            cin >> radius;
+            cout << "Enter height: ";
+            cin >> height;
+            cout << "Total surface area of cylinder: " << area_cylinder(radius, height) << '\n';
+            break;
+        }
+        default:
+            cout << "Invalid choice!\n";
+            break;
+    }
+
+    return 0;
+}
