@@ -1,0 +1,46 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+
+using namespace std;
+
+//  variables for map size  
+int mapWidth = 20;
+int mapHeight = 20;
+
+ 
+void createRandomMap() {
+    mapWidth = 20;
+    mapHeight = 20;
+}
+
+//   check if the location is valid
+bool isLocationValid(int x, int y) {
+    //  coordinates based on map size (-10, -10) to (10, 10)
+    return (x >= -mapWidth / 2 && x <= mapWidth / 2) &&
+           (y >= -mapHeight / 2 && y <= mapHeight / 2);
+}
+
+int main() {
+    srand(time(0)); // Seed random number generator
+
+    string name;
+    int x, y;
+
+    createRandomMap(); // create map 
+
+    cout << "Enter your name: ";
+    cin >> name;
+
+    cout << "Enter your location point (x, y): ";
+    cin >> x >> y;
+
+    // Check if the point is within the map
+    if (isLocationValid(x, y)) {
+        cout << "Hello " << name << "! Your location (" << x << ", " << y << ") is within the map." << endl;
+    } else {
+        cout << "Sorry " << name << ", your location (" << x << ", " << y << ") is outside the map." << endl;
+    }
+
+    return 0;
+}
