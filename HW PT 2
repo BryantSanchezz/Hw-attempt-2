@@ -1,0 +1,97 @@
+#include <iostream>
+#include <iomanip> 
+using namespace std;
+
+// Function to check if a year is a leap year
+bool isLeapYear(int year) {
+    if (year % 4 == 0) {
+        if (year % 100 == 0) {
+            if (year % 400 == 0) return true;
+            return false;
+        }
+        return true;
+    }
+    return false;
+}
+
+// Function to determine the number of days in a month
+int getDaysInMonth(int month, int year) {
+    switch (month) {
+        case 1: return 31; // January
+        case 2: return isLeapYear(year) ? 29 : 28; // February
+        case 3: return 31; // March
+        case 4: return 30; // April
+        case 5: return 31; // May
+        case 6: return 30; // June
+        case 7: return 31; // July
+        case 8: return 31; // August
+        case 9: return 30; // September
+        case 10: return 31; // October
+        case 11: return 30; // November
+        case 12: return 31; // December
+        default: return 0;
+    }
+}
+
+// Function to determine the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+int getStartDayOfYear(int year) {
+    int day = 1; // Assume January 1st of 0001 is a Monday
+    int startYear = 1900;
+
+    //  number of days from the base year to the given year
+    for (int i = startYear; i < year; i++) {
+        day += isLeapYear(i) ? 366 : 365;
+    }
+    return day % 7; // Day of the week (0 = Sunday, 1 = Monday, and so on)
+}
+
+// print the month's calendar
+void printMonth(int month, int year, int &startDay) {
+    //  month names
+    string months[] = { "", "January", "February", "March", "April", "May", "June",
+                        "July", "August", "September", "October", "November", "December" };
+
+    cout << "\n--" << months[month] << " " << year << " --\n";
+    cout << "Mon   Tue   Wed   Thu   Fri   Sat   Sun\n";
+
+    int daysInMonth = getDaysInMonth(month, year);
+    int dayCounter = 1;
+
+    // leading spaces for the first day
+    for (int i = 0; i < startDay; i++) {
+        cout << "      ";
+    }
+
+    // days of the month
+    for (int i = startDay; dayCounter <= daysInMonth; i++) {
+        cout << setw(3) << dayCounter << "   ";
+
+        // Go to the next line after printing Sunday
+        if (i % 7 == 6) {
+            cout << endl;
+        }
+        dayCounter++;
+    }
+
+    cout << endl;
+
+    // Set the start day for the next month
+    startDay = (startDay + daysInMonth) % 7;
+}
+
+int main() {
+    int year;
+    cout << "Enter a year: ";
+    cin >> year;
+
+    cout << "Calendar for " << year << endl;
+
+    int startDay = getStartDayOfYear(year);
+
+    // Loop through each month
+    for (int month = 1; month <= 12; month++) {
+        printMonth(month, year, startDay);
+    }
+
+    return 0;
+}
