@@ -2,7 +2,7 @@
 using namespace std;
 
 int main() {
-    char message[] = {'I', 'l', 'i', 'k', 'e', 't', 'o', 'e', 'a', 't', 'o', 'i', 'z', 'z', 'a'};
+    char message[] = {'I', 'l', 'i', 'k', 'e', 't', 'o', 'e', 'a', 't', 'p', 'i', 'z', 'z', 'a'};
     int vowel_count = 0;
 
     for (int i = 0; i < sizeof(message) / sizeof(message[0]); ++i) {
