@@ -1,0 +1,30 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int data[] = {1, 3, 6, 7, 9};
+    int data1[] = {5, 3, 3, 11};
+
+    int min_size = min(sizeof(data)/sizeof(data[0]), sizeof(data1)/sizeof(data1[0]));
+
+    for (int i = 0; i < min_size; ++i) {
+        data[i] = data[i] + data1[i];
+        data1[i] = data[i] - data1[i];
+        data[i] = data[i] - data1[i];
+    }
+
+    // Output the arrays after swapping
+    cout << "Data after swapping: ";
+    for (int i = 0; i < min_size; ++i) {
+        cout << data[i] << " ";
+    }
+    cout << endl;
+
+    cout << "Data1 after swapping: ";
+    for (int i = 0; i < min_size; ++i) {
+        cout << data1[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
