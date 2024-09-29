@@ -1,0 +1,183 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+// Simple structure to store player stats (health, magic, strength)
+struct Stats {
+    int health;
+    int magic;
+    int strength;
+};
+
+// Player class with basic functionality
+class Player {
+public:
+    std::string playerType;  // Player type (Zeus, Poseidon, Hades)
+    Stats stats;             // Player stats
+    std::vector<std::string> inventory; // Player's inventory (list of items)
+
+    // Constructor to set the player's type and initial stats
+    Player(std::string type) {
+        playerType = type;
+        if (playerType == "zeus") {
+            stats = {80, 100, 50};  // Zeus has high magic
+        } else if (playerType == "poseidon") {
+            stats = {90, 70, 60};   // Poseidon is balanced with good magic
+        } else if (playerType == "hades") {
+            stats = {100, 50, 80};  // Hades has high health and strength
+        }
+    }
+
+    // Function to display player's current stats
+    void displayStats() {
+        std::cout << "Player: " << playerType << std::endl;
+        std::cout << "Health: " << stats.health << std::endl;
+        std::cout << "Magic: " << stats.magic << std::endl;
+        std::cout << "Strength: " << stats.strength << std::endl;
+    }
+
+    // Function to display player's inventory
+    void displayInventory() {
+        if (inventory.empty()) {
+            std::cout << "Your inventory is empty." << std::endl;
+        } else {
+            std::cout << "Inventory:" << std::endl;
+            for (size_t i = 0; i < inventory.size(); ++i) {
+                std::cout << i + 1 << ". " << inventory[i] << std::endl;
+            }
+        }
+    }
+
+    // Function to add an item to the player's inventory
+    void addItem(const std::string& item) {
+        inventory.push_back(item);
+        std::cout << item << " has been added to your inventory." << std::endl;
+    }
+
+    // Function to use an item from the inventory
+    void useItem(int index) {
+        if (index < 0 || index >= inventory.size()) {
+            std::cout << "Invalid item selection." << std::endl;
+            return;
+        }
+
+        std::string item = inventory[index];
+        std::cout << "Using " << item << std::endl;
+
+        // Example of item effects
+        if (item == "Trident of Poseidon") {
+            stats.magic += 10;  // Increase magic by 10 when using the trident
+            std::cout << "Your magic increased by 10!" << std::endl;
+        } else if (item == "Helmet of Hades") {
+            stats.health += 20; // Increase health by 20 when using the helmet
+            std::cout << "Your health increased by 20!" << std::endl;
+        } else if (item == "Zeus' Thunderbolt") {
+            stats.strength += 15; // Increase strength by 15
+            std::cout << "Your strength increased by 15!" << std::endl;
+        } else if (item == "Poseidon's Shell") {
+            stats.health += 15; // Increase health by 15
+            std::cout << "Your health increased by 15!" << std::endl;
+        } else if (item == "Hades' Cloak") {
+            stats.magic += 20; // Increase magic by 20
+            std::cout << "Your magic increased by 20!" << std::endl;
+        } else if (item == "Apollo's Bow") {
+            stats.strength += 20; // Increase strength by 20
+            std::cout << "Your strength increased by 20!" << std::endl;
+        } else if (item == "Hermes' Sandals") {
+            stats.health += 10; // Increase health by 10
+            std::cout << "Your health increased by 10!" << std::endl;
+        } else if (item == "Ares' Shield") {
+            stats.strength += 25; // Increase strength by 25
+            std::cout << "Your strength increased by 25!" << std::endl;
+        } else if (item == "Athena's Spear") {
+            stats.magic += 15; // Increase magic by 15
+            std::cout << "Your magic increased by 15!" << std::endl;
+        } else if (item == "Dionysus' Goblet") {
+            stats.health += 30; // Increase health by 30
+            std::cout << "Your health increased by 30!" << std::endl;
+        }
+
+        // Remove the used item from inventory
+        inventory.erase(inventory.begin() + index);
+        std::cout << item << " has been used and removed from your inventory." << std::endl;
+    }
+};
+
+// Function to choose a player type
+std::string choosePlayerType() {
+    std::string playerType;
+    std::cout << "Choose your player type: Zeus, Poseidon, or Hades." << std::endl;
+    std::cin >> playerType;
+    return playerType;
+}
+
+// Main function
+int main() {
+    // Define 10 items
+    std::vector<std::string> items = {
+        "Trident of Poseidon", "Helmet of Hades", "Zeus' Thunderbolt", "Poseidon's Shell",
+        "Hades' Cloak", "Apollo's Bow", "Hermes' Sandals", "Ares' Shield",
+        "Athena's Spear", "Dionysus' Goblet"
+    };
+
+    // Choose player type
+    std::string playerType = choosePlayerType();
+
+    // Create player with the chosen type
+    Player player(playerType);
+
+    // Main game loop
+    while (true) {
+        // Show options to the player
+        std::cout << "\nWhat would you like to do?" << std::endl;
+        std::cout << "1. View player stats" << std::endl;
+        std::cout << "2. View inventory" << std::endl;
+        std::cout << "3. Pick up an item" << std::endl;
+        std::cout << "4. Use an item" << std::endl;
+        std::cout << "5. Exit game" << std::endl;
+
+        int choice;
+        std::cin >> choice;
+
+        if (choice == 1) {
+            // Show player stats
+            player.displayStats();
+        } else if (choice == 2) {
+            // Show player's inventory
+            player.displayInventory();
+        } else if (choice == 3) {
+            // Pick up an item
+            std::cout << "Choose an item to pick up:" << std::endl;
+            for (size_t i = 0; i < items.size(); ++i) {
+                std::cout << i + 1 << ". " << items[i] << std::endl;
+            }
+
+            int itemChoice;
+            std::cin >> itemChoice;
+
+            if (itemChoice > 0 && itemChoice <= items.size()) {
+                player.addItem(items[itemChoice - 1]);
+            } else {
+                std::cout << "Invalid choice." << std::endl;
+            }
+        } else if (choice == 4) {
+            // Use an item
+            player.displayInventory();
+            std::cout << "Choose an item to use:" << std::endl;
+
+            int itemIndex;
+            std::cin >> itemIndex;
+
+            // Convert to zero-based index
+            player.useItem(itemIndex - 1);
+        } else if (choice == 5) {
+            // Exit game
+            std::cout << "Exiting game..." << std::endl;
+            break;
+        } else {
+            std::cout << "Invalid choice. Try again." << std::endl;
+        }
+    }
+
+    return 0;
+}
