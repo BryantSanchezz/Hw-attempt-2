@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 
-// Simple structure to store player stats (health, magic, strength)
+// player stats (health, magic, strength)
 struct Stats {
     int health;
     int magic;
@@ -12,11 +12,11 @@ struct Stats {
 // Player class with basic functionality
 class Player {
 public:
-    std::string playerType;  // Player type (Zeus, Poseidon, Hades)
+    std::string playerType;  // Player type  
     Stats stats;             // Player stats
     std::vector<std::string> inventory; // Player's inventory (list of items)
 
-    // Constructor to set the player's type and initial stats
+    //Set the player's type and initial stats based on whatever class chosen
     Player(std::string type) {
         playerType = type;
         if (playerType == "zeus") {
@@ -28,7 +28,7 @@ public:
         }
     }
 
-    // Function to display player's current stats
+    //  display player's current stats
     void displayStats() {
         std::cout << "Player: " << playerType << std::endl;
         std::cout << "Health: " << stats.health << std::endl;
@@ -36,7 +36,7 @@ public:
         std::cout << "Strength: " << stats.strength << std::endl;
     }
 
-    // Function to display player's inventory
+    //  display player's inventory
     void displayInventory() {
         if (inventory.empty()) {
             std::cout << "Your inventory is empty." << std::endl;
@@ -48,13 +48,13 @@ public:
         }
     }
 
-    // Function to add an item to the player's inventory
+    //  add an item to the player's inventory
     void addItem(const std::string& item) {
         inventory.push_back(item);
         std::cout << item << " has been added to your inventory." << std::endl;
     }
 
-    // Function to use an item from the inventory
+    //  use an item from the inventory
     void useItem(int index) {
         if (index < 0 || index >= inventory.size()) {
             std::cout << "Invalid item selection." << std::endl;
@@ -64,7 +64,7 @@ public:
         std::string item = inventory[index];
         std::cout << "Using " << item << std::endl;
 
-        // Example of item effects
+        // item effects
         if (item == "Trident of Poseidon") {
             stats.magic += 10;  // Increase magic by 10 when using the trident
             std::cout << "Your magic increased by 10!" << std::endl;
@@ -103,7 +103,7 @@ public:
     }
 };
 
-// Function to choose a player type
+//  choose a player type
 std::string choosePlayerType() {
     std::string playerType;
     std::cout << "Choose your player type: Zeus, Poseidon, or Hades." << std::endl;
@@ -168,7 +168,7 @@ int main() {
             int itemIndex;
             std::cin >> itemIndex;
 
-            // Convert to zero-based index
+            // zero-based index
             player.useItem(itemIndex - 1);
         } else if (choice == 5) {
             // Exit game
