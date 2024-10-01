@@ -12,7 +12,7 @@ struct Stats {
 // Player class  
 class Player {
 public:
-    std::string playerType;  // Player type (Zeus, Poseidon, Hades)
+    std::string playerType;  // Player type  
     Stats stats;             // Player stats
     std::vector<std::string> inventory; // Player's inventory (list of items)
 
