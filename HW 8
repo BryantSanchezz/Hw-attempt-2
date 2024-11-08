@@ -1,0 +1,79 @@
+#include <iostream>
+#include <bitset>
+#include <cstdlib>
+#include <ctime>
+
+class MotorStatus {
+private:
+    uint8_t motorState;
+    uint8_t overheatingMotors;
+    int turnCount;
+
+    void initialize() {
+        srand(time(0));
+        motorState = rand() % 256;
+        overheatingMotors = 0;
+        updateOverheating();
+        turnCount = 0;
+        displayStatus();
+    }
+
+    void updateOverheating() {
+        int newMotor;
+        do {
+            newMotor = rand() % 8;
+        } while (((1 << newMotor) & motorState) == 0 || ((1 << newMotor) & overheatingMotors) != 0);
+        overheatingMotors |= (1 << newMotor);
+        turnCount++;
+    }
+
+    void displayStatus() {
+        std::cout << "Motor State (ON/OFF): " << std::bitset<8>(motorState) << std::endl;
+        std::cout << "Overheating Motors: " << std::bitset<8>(overheatingMotors) << std::endl;
+        std::cout << "Turn Count: " << turnCount << std::endl;
+    }
+
+public:
+    MotorStatus() {
+        initialize();
+    }
+
+    bool turnOff(uint8_t guess) {
+        if (overheatingMotors & (1 << guess)) {
+            motorState &= ~(1 << guess);
+            overheatingMotors &= ~(1 << guess);
+            displayStatus();
+            return true;
+        } else {
+            updateOverheating();
+            displayStatus();
+            return false;
+        }
+    }
+
+    bool allMotorsSafe() const {
+        return overheatingMotors == 0;
+    }
+};
+
+int main() {
+    MotorStatus motorStatus;
+    int guessedMotor;
+
+    while (!motorStatus.allMotorsSafe()) {
+        std::cout << "Guess a motor to turn off (0-7): ";
+        std::cin >> guessedMotor;
+
+        if (guessedMotor < 0 || guessedMotor > 7) {
+            std::cout << "Invalid input! Please enter a motor number between 0 and 7.\n";
+            continue;
+        }
+
+        if (!motorStatus.turnOff(guessedMotor)) {
+            std::cout << "Incorrect guess! Another motor is overheating.\n";
+        }
+    }
+
+    std::cout << "All overheating motors have been turned off. Good job!\n";
+    return 0;
+}
