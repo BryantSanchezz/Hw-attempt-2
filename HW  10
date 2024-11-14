@@ -1,0 +1,70 @@
+#include <iostream>
+#include <stdexcept>
+using namespace std;
+
+double divide(int numerator, int denominator) {
+    if (denominator == 0) {
+        throw runtime_error("Error: Division by zero is not allowed.");
+    }
+    return static_cast<double>(numerator) / denominator;
+}
+
+int accessArray(int arr[], int size, int index) {
+    if (index < 0 || index >= size) {
+        throw out_of_range("Error: Index out of bounds.");
+    }
+    return arr[index];
+}
+
+void nestedFunction() {
+    throw runtime_error("Error in nestedFunction");
+}
+
+void outerFunction() {
+    try {
+        nestedFunction();
+    } catch (const runtime_error& e) {
+        cout << "Caught exception in outerFunction: " << e.what() << endl;
+        throw;
+    }
+}
+
+int main() {
+    int numerator, denominator;
+
+    try {
+        cout << "Enter numerator: ";
+        cin >> numerator;
+        cout << "Enter denominator: ";
+        cin >> denominator;
+        double result = divide(numerator, denominator);
+        cout << "The result is: " << result << endl;
+    } catch (const runtime_error& e) {
+        cout << e.what() << endl;
+    }
+
+    try {
+        int size;
+        cout << "Enter array size: ";
+        cin >> size;
+        int* arr = new int[size];
+
+        int index;
+        cout << "Enter index to access: ";
+        cin >> index;
+        int value = accessArray(arr, size, index);
+        cout << "The value at index " << index << " is: " << value << endl;
+
+        delete[] arr;
+    } catch (const out_of_range& e) {
+        cout << e.what() << endl;
+    }
+
+    try {
+        outerFunction();
+    } catch (const runtime_error& e) {
+        cout << "Caught rethrown exception in main: " << e.what() << endl;
+    }
+
+    return 0;
+}
