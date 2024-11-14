@@ -1,0 +1,30 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Assassin class
+class Assassin {
+public:
+    // Basic attack with no parameters
+    void attack() {
+        cout << "The assassin performs a basic attack!" << endl;
+    }
+
+    // Attack with damage with one parameter
+    void attack(int damage) {
+        cout << "The assassin performs an attack with " << damage << " damage!" << endl;
+    }
+
+    // Magic attack two parameters 
+    void attack(const string& spell, int damage) {
+        cout << "The assassin casts the spell '" << spell << "' dealing " << damage << " damage!" << endl;
+    }
+};
+
+int main() {
+    Assassin assassin;
+    assassin.attack();
+    assassin.attack(50);
+    assassin.attack("Shadow Strike", 100);
+    return 0;
+}
